@@ -1,0 +1,10 @@
+{
+  "Name": "Iaigiri",
+  "Author": "kaniclub",
+  "Version": "1.0.0",
+  "Description": "Adds an iaigiri-style secondary attack.",
+  "UniqueID": "kaniclub.Iaigiri",
+  "EntryDll": "Iaigiri.dll",
+  "MinimumApiVersion": "4.1.0",
+  "UpdateKeys": [ "Nexus:44988" ]
+}
