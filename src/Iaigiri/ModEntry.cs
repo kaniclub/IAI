@@ -66,7 +66,7 @@ public sealed class ModEntry : Mod
     // ----------------------------
     private void OnButtonPressed(object? sender, ButtonPressedEventArgs e)
     {
-        if (!this.CanHandleIaigiriInput(e.Button, out Farmer? player))
+        if (!this.CanHandleIaigiriInput(out Farmer? player))
             return;
 
         if (!this.TryGetEligibleWeapon(player, out MeleeWeapon? weapon))
@@ -201,14 +201,14 @@ public sealed class ModEntry : Mod
     // ----------------------------
     // 入力・状況・ UI 状態を見て、Iaigiri 入力を処理してよいか判定する。
     // ----------------------------
-    private bool CanHandleIaigiriInput(SButton button, [NotNullWhen(true)] out Farmer? player)
+    private bool CanHandleIaigiriInput([NotNullWhen(true)] out Farmer? player)
     {
         player = Game1.player;
         return Context.IsWorldReady
             && player is not null
             && this.config.ModEnabled
-            && button == SButton.MouseRight
-            && Game1.activeClickableMenu is null;
+            && Game1.activeClickableMenu is null
+            && Game1.didPlayerJustRightClick(ignoreNonMouseHeldInput: true);
     }
 
     // ----------------------------
