@@ -212,23 +212,21 @@ public sealed class ModEntry : Mod
     }
 
     // ----------------------------
-    // 武器特性以外の右クリック行動だけを、バニラ本体にそのまま処理させる。
+    // 装備スロットを空にせず、手収穫や拾得などの右クリック行動だけを通す。
     // ----------------------------
     private bool TryConsumeVanillaRightClickAction(Farmer player, MeleeWeapon scythe)
     {
         if (player.UsingTool || Game1.fadeToBlack)
             return true;
 
-        Tool? originalTool = player.CurrentTool;
-        try
-        {
-            player.CurrentTool = null;
-            return !Game1.pressActionButton(Game1.GetKeyboardState(), Game1.input.GetMouseState(), Game1.input.GetGamePadState());
-        }
-        finally
-        {
-            player.CurrentTool = originalTool ?? scythe;
-        }
+        Vector2 grabTile = new Vector2(Game1.getOldMouseX() + Game1.viewport.X, Game1.getOldMouseY() + Game1.viewport.Y) / 64f;
+        if (!Game1.wasMouseVisibleThisFrame || Game1.mouseCursorTransparency == 0f || !Utility.tileWithinRadiusOfPlayer((int)grabTile.X, (int)grabTile.Y, 1, player))
+            grabTile = player.GetGrabTile();
+
+        if (Game1.tryToCheckAt(grabTile, player))
+            return true;
+
+        return Game1.tryToCheckAt(player.Tile, player);
     }
 
     // ----------------------------

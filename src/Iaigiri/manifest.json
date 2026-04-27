@@ -1,7 +1,7 @@
 {
   "Name": "Iaigiri",
   "Author": "kaniclub",
-  "Version": "1.0.1",
+  "Version": "1.0.2",
   "Description": "Adds an iaigiri-style secondary attack.",
   "UniqueID": "kaniclub.Iaigiri",
   "EntryDll": "Iaigiri.dll",
